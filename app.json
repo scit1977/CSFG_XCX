@@ -1,0 +1,49 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/baoliao/new/index",
+    "pages/baoliao/all/index",
+    "pages/mine/index",
+    "pages/authorize/authorize"
+  ],
+  "window": {
+    "navigationBarBackgroundColor": "#39b54a",
+    "navigationBarTitleText": "Color UI",
+    "navigationStyle": "custom",
+    "navigationBarTextStyle": "white"
+  },
+  "usingComponents": {
+    "cu-custom": "/colorui/components/cu-custom"
+  },
+  "tabBar": {
+    "color": "#ccc",
+    "list": [
+      {
+        "text": "首页",
+        "iconPath": "images/home.png",
+        "selectedIconPath": "images/home-actived.png",
+        "pagePath": "pages/index/index"
+      },
+      {
+        "text": "在线提交",
+        "iconPath": "images/star.png",
+        "selectedIconPath": "images/star-actived.png",
+        "pagePath": "pages/baoliao/new/index"
+      },
+      {
+        "text": "所有报错",
+        "iconPath": "images/note.png",
+        "selectedIconPath": "images/note_actived.png",
+        "pagePath": "pages/baoliao/all/index"
+      },
+      {
+        "text": "个人中心",
+        "iconPath": "images/profile.png",
+        "selectedIconPath": "images/profile-actived.png",
+        "pagePath": "pages/mine/index"
+      }
+    ]
+  },
+ 
+  "sitemapLocation": "sitemap.json"
+}

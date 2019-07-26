@@ -1,0 +1,44 @@
+<!--pages/mine/index.wxml-->
+<cu-custom bgColor="bg-gradual-pink" isCustom="{{true}}"><view slot="content">个人中心</view></cu-custom>
+<view class="userinfo">
+  <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo" class="userinfo-btn"> 点击微信授权 </button>
+  <block wx:else>
+    <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
+    <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+  </block>
+</view>
+
+<view class="separate"></view>
+
+
+<view class="line"></view>
+
+
+<view class="separate"></view>
+<view class="separate"></view>
+<view class="user-menu">
+    <view class="item">
+      <navigator url="../myorder/myorder" class="a">
+        <text class="icon order"></text>
+        <text class="txt">我的提问</text>
+      </navigator>
+    </view>
+    
+    
+    <view class="item">
+      <navigator url="../address/address"  class="a">
+        <text class="icon address"></text>
+        <text class="txt">个人信息</text>
+      </navigator>
+    </view>
+     <view class="item">
+     <navigator url="/pages/tel/tel" class="a">
+        <text class="icon help"></text>
+        <text class="txt">电话咨询</text>
+      </navigator>
+    </view>
+   
+</view>
+     
+<view class="separate"></view>
+
