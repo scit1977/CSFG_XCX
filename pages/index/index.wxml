@@ -1,59 +1,18 @@
 <!--index.wxml-->
 <cu-custom bgColor="bg-gradual-blue" isBack="{{false}}"><view slot="backText">返回</view><view slot="content">首页</view></cu-custom> <!-- 自定义头部区结束--> 
-<view class="box">
-  <view class="cu-bar search bg-white">
-    <view class="search-form round">
-      <text class="cuIcon-search"></text>
-      <input type="text" placeholder="搜索图片、文章、视频" confirm-type="search"></input>
-    </view>
-    <view class="action">
-      <button class="cu-btn bg-green shadow-blur round">搜索</button>
-    </view>
-  </view>
-</view> <!-- 搜索区结束--> 
- <view class="cu-bar bg-white solid-bottom margin-top">
-    <view class="action">
-      <text class="cuIcon-title text-orange "></text> 宫格列表
-    </view>    
-  </view> <!-- 宫格列表上区结束--> 
-   <view class="cu-list grid col-{{gridCol}} {{gridBorder?'':'no-border'}}">
-    <view class="cu-item" wx:for="{{iconList}}" wx:key wx:if="{{index<gridCol*2}}">
-      <view class="cuIcon-{{item.icon}} text-{{item.color}}">        
-      </view>
-      <text>{{item.name}}</text>
-    </view>
-  </view> <!-- 宫格下区结束--> 
-  <view class="cu-bar bg-white solid-bottom margin-top">
-    <view class="action">
-      <text class="cuIcon-title text-orange "></text> 消息列表
-    </view>
-  </view> <!-- 消息列表上区结束--> 
-  <view class="cu-list menu-avatar">
-    <view class="cu-item">
-      <view class="cu-avatar round lg" style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big10001.jpg);"></view>
-      <view class="content">
-        <view class="text-grey">瓦罗兰大陆-睡衣守护者-新手保护营。</view>       
-      </view>
-      <view class="action">
-        <view class="text-grey text-xs">22:20</view>      
-      </view>
-    </view><!-- 单条消息结束-->
-    <view class="cu-item">
-      <view class="cu-avatar round lg" style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big10001.jpg);"></view>
-      <view class="content">
-        <view class="text-grey">瓦罗兰大陆-睡衣守护者-新手保护营。</view>       
-      </view>
-      <view class="action">
-        <view class="text-grey text-xs">22:20</view>      
-      </view>
-    </view><!-- 单条消息结束-->
-    <view class="cu-item">
-      <view class="cu-avatar round lg" style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big10001.jpg);"></view>
-      <view class="content">
-        <view class="text-grey">瓦罗兰大陆-睡衣守护者-新手保护营。</view>       
-      </view>
-      <view class="action">
-        <view class="text-grey text-xs">22:20</view>      
-      </view>
-    </view><!-- 单条消息结束-->
-    </view> <!-- 消息列表下区结束--> 
+<!--pages/home/home.wxml-->
+ <import src="../../wxParse/wxParse.wxml"/>
+
+<swiper class="screen-swiper square-dot" indicator-dots="true" circular="true" autoplay="true" interval="3000" duration="500">
+  <swiper-item wx:for="{{imgUrls}}" wx:key>
+    <image src="{{item}}" mode="aspectFill" ></image>
+   
+  </swiper-item>
+</swiper>   
+  <view class="contents">      
+       <template is="wxParse" data="{{wxParseData:content.nodes}}"/>
+  </view> 
+ 
+ 
+ 
+

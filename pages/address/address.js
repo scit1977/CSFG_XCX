@@ -169,14 +169,7 @@ Page({
     this.activeButton()
    // console.log('nameInfo: ' + this.data.otherInfo)
   },
-  addaddressInfo: function (e) {
-    // 其他 地址信息部分
-    this.setData({
-      address: e.detail.value
-    })
-    this.activeButton()
-   // console.log('addressInfo: ' + this.data.otherInfo)
-  },
+ 
 
   // 验证码
   addCode: function (e) {
@@ -191,9 +184,9 @@ Page({
   // 按钮
   activeButton: function () {
    // console.log('activeButton 函数')
-    let { phoneNum, code, name,address } = this.data
+    let { phoneNum, code, name } = this.data
    // console.log('code=='+code)
-    if (phoneNum && code && name && address) {
+    if (phoneNum && code && name ) {
       this.setData({
         disabled: false,
         buttonType: 'primary'
@@ -220,7 +213,7 @@ Page({
    // http.postReq(url, data, function (res) {
       //console.log(res)      
       that.setData({
-        address: res.result.address,
+       
         phoneNum: res.result.tel,
         name: res.result.name,
       })
@@ -248,8 +241,7 @@ Page({
       method: "POST",
       data: {
         name: value.name,
-        tel: value.tel,
-        address: value.address,
+        tel: value.tel,       
         code:value.code,
         uid:this.data.uid,
         nickName: app.globalData.userInfo.nickName,
@@ -314,7 +306,7 @@ Page({
    // console.log('value.code=' + value.code)
     //console.log('this.data.backcode=' + this.data.backcode)
    
-    if (value.name && value.tel && value.address&&value.code) {
+    if (value.name && value.tel &&value.code) {
       this.input_data(value)
      
     } else {

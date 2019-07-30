@@ -1,9 +1,11 @@
 {
   "pages": [
-    "pages/index/index",
-    "pages/baoliao/new/index",
-    "pages/baoliao/all/index",
+    "pages/index/index",    
+    "pages/add_error/index",
     "pages/mine/index",
+    "pages/all_week/index",
+    "pages/detail/index",
+    "pages/all_error/index",
     "pages/authorize/authorize"
   ],
   "window": {
@@ -24,17 +26,18 @@
         "selectedIconPath": "images/home-actived.png",
         "pagePath": "pages/index/index"
       },
+      
       {
-        "text": "在线提交",
-        "iconPath": "images/star.png",
-        "selectedIconPath": "images/star-actived.png",
-        "pagePath": "pages/baoliao/new/index"
-      },
-      {
-        "text": "所有报错",
+        "text": "问题上报",
         "iconPath": "images/note.png",
         "selectedIconPath": "images/note_actived.png",
-        "pagePath": "pages/baoliao/all/index"
+        "pagePath": "pages/all_error/index"
+      },
+      {
+        "text": "典型问题",
+        "iconPath": "images/star.png",
+        "selectedIconPath": "images/star-actived.png",
+        "pagePath": "pages/all_week/index"
       },
       {
         "text": "个人中心",

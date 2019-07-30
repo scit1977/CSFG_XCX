@@ -1,7 +1,8 @@
 // pages/baoliao/new/index.js
-import { promisify } from '../../../utils/promise.util'
+import { promisify } from '../../utils/promise.util'
 const wxUploadFile = promisify(wx.uploadFile)
-const http = require('../../../utils/http.js');
+const http = require('../../utils/http.js')
+var util = require('../../utils/util.js')
 Page({
 
   /**
@@ -12,12 +13,12 @@ Page({
     content: '',//内容
     titleCount: 0, //标题字数
     contentCount: 0, //正文字数
-    
-    date: '2019-07-08',
+
+    date: null,
     textareaBValue: '',
     picker: [],
     index: 0,
-    dtype:null,
+    dtype: null,
     imgList: [],
     uid: ''
   },
@@ -30,10 +31,8 @@ Page({
       dtype: this.data.picker[index0].id,
     })
     console.log(e.detail.value);
-   
-    //console.log('picker index=' + index0)
-    // console.log('picker index=' + )
-  },
+    this.NewsItemsShow();
+  },//end of PickerChange
   DateChange(e) {
     //日期选择处理
     this.setData({
@@ -109,11 +108,11 @@ Page({
     let title = this.data.title
     let content = this.data.content
     let dtype = this.data.dtype
-    let uid=this.data.uid
+    let uid = this.data.uid
 
     if (title && content) {
       const arr = []
-       // 将选择的图片组成一个Promise数组，准备进行并行上传
+      // 将选择的图片组成一个Promise数组，准备进行并行上传
       for (let path of this.data.imgList) {
         arr.push(wxUploadFile({
           //url: 'http://172.18.42.183:8080/pyapp/Info/upload',
@@ -136,13 +135,14 @@ Page({
           content: content,
           dtype: dtype,
           imgs: imgs,
-          uid:uid
+          uid: uid,
+          fst_id: this.data.dtype
         }
         http.postReq(url, data).then(function (res) {
           console.log(res)
 
-        })  
-        
+        })
+
       }).catch(err => {
         console.log(">>>> upload images error:", err)
       })
@@ -214,30 +214,50 @@ Page({
         )
       }
       */
-    }else{
+    } else {
       console.log('请输入所有项目')
+      wx.showModal({
+        title: '错误',
+        content: '请输入所有必填项目',
+        showCancel: false
+      });
     }
   },
-  fetchtype(){
-   //获取发射机类型
+  initdate(){
+    //日期初始化
+    var DATE = util.formatDate(new Date());
+
+    this.setData({
+
+      date: DATE,
+
+    });
+
+  },// end of initdate
+  fetchtype() {
+    //获取发射机类型
     var that = this;
-    let url = 'Info/Gettypes/';
+    let url = 'Getfstlist/';
     let data = {
-      uid: this.uid
+      uid: this.data.uid
     }
     http.postReq(url, data).then(function (res) {
       console.log(res.result)
       that.setData({
-        picker: res.result
+        picker: res.result,
+        dtype: res.result[0].id,
       });
-    })  
-    console.log(this.data.picker)
-  },
+      console.log(that.data.dtype)
+     
+    })
+    // console.log(this.data.picker[0].id)
+  },// end of  fetchtype
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
     this.data.uid = wx.getStorageSync('openid')
+    
     this.fetchtype()
   },
 
@@ -252,7 +272,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    this.initdate()
   },
 
   /**

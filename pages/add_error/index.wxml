@@ -1,0 +1,75 @@
+<!--pages/add_error/index.wxml-->
+<!--pages/baoliao/new/index.wxml-->
+<cu-custom bgColor="bg-gradual-blue" isCustom="{{true}}"><view slot="content">在线提交</view></cu-custom> <!-- 自定义头部区结束--> 
+<form>
+<view class='box'>
+   <view class="cu-form-group margin-top">
+		<view class="title">发射台</view>
+		<picker bindchange="PickerChange" value="{{picker[index].id}}" range="{{picker}}"  range-key="{{'fst_name'}}">
+			<view class="picker">
+			{{picker[index].fst_name}} 
+			</view>
+		</picker>
+	</view>
+</view><!--发射台类型结束-->
+  <view class="cu-bar bg-white margin-top">
+		<view class="action">
+			问题标题 <text class="text-red">（必填）</text>
+		</view>
+		<view class="action">
+			{{titleCount}}/40
+		</view>
+	</view><!--标题块结束-->
+	<view class="cu-form-group">
+	
+		<input placeholder="请输入标题" bindinput="handleTitleInput"></input>
+	</view><!--标题结束-->
+  <view class="cu-bar bg-white margin-top">
+		<view class="action">
+			详细描述<text class="text-red">（必填）</text>
+		</view>
+		<view class="action">
+			{{contentCount}}/500
+		</view>
+	</view><!--标题块结束-->
+  <view class="cu-form-group ">
+	
+		<textarea maxlength="500"  bindinput="textareaBInput" placeholder="请输入问题的详细描述"></textarea>
+	</view><!--内容结束-->
+ 
+  <view class="cu-form-group">
+		<view class="title">日期选择</view>
+		<picker mode="date" value="{{date}}" start="2018-09-01" end="2020-09-01" bindchange="DateChange">
+			<view class="picker">
+				{{date}}
+			</view>
+		</picker>
+	</view><!--日期结束-->
+  <view class="cu-bar bg-white margin-top">
+		<view class="action">
+			图片上传
+		</view>
+		<view class="action">
+			{{imgList.length}}/4
+		</view>
+	</view><!--图片标题块结束-->
+  <view class="cu-form-group">
+		<view class="grid col-4 grid-square flex-sub">
+			<view class="bg-img" wx:for="{{imgList}}" wx:key="{{index}}" bindtap="ViewImage" data-url="{{imgList[index]}}">
+				<image src='{{imgList[index]}}' mode='aspectFill'></image>
+				<view class="cu-tag bg-red" catchtap="DelImg" data-index="{{index}}">
+					<text class="cuIcon-close"></text>
+				</view>
+			</view>
+			<view class="solids" bindtap="ChooseImage" wx:if="{{imgList.length<4}}">
+				<text class="cuIcon-cameraadd"></text>
+			</view>
+		</view>
+	</view><!--图片结束-->
+   <view class="box margin-top">
+   <view class="cu-bar btn-group">
+    <button class="cu-btn bg-green shadow-blur round lg " bindtap="submitForm">提交</button>
+    </view>
+   </view>
+</form>  
+
