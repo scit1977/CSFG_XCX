@@ -26,22 +26,31 @@ Page({
 
     http.postReq(url, data).then(function (res) {
       console.log(res.result)
+      console.log(res.result.shipin)
       that.setData({
         title: res.result.title,
         content: res.result.content,
         name: res.result.name,
         fst_name: res.result.fst_name,
         input_date: res.result.input_date,
+        shipin:res.result.shipin,
         imgs: res.imgs,
 
       });
       console.log(that.data.imgs)
+      console.log(that.data.shipin)
       var WxParse = require('../../wxParse/wxParse.js');
       WxParse.wxParse('content', 'html', that.data.content, that, 25);
     })
    
 
   },//end of loadnews
+  ViewImage(e) {
+    wx.previewImage({
+      urls: this.data.imgs,
+      current: e.currentTarget.dataset.url
+    });
+  },
   toback:function(){
     //返回
     wx.navigateBack({

@@ -20,6 +20,8 @@ Page({
     index: 0,
     dtype: null,
     imgList: [],
+    videoList:null,
+    size:null,
     uid: ''
   },
   PickerChange(e) {
@@ -61,6 +63,33 @@ Page({
     })
 
   },
+  ChooseVideo: function (){
+    //视频选择
+    console.log('videoList choose')
+    
+    var that = this
+    wx.chooseVideo({
+      sourceType: ['album', 'camera'],
+      maxDuration: 60,
+      camera: 'back',
+      success: function (res) {
+        console.log(res)
+       
+         // console.log('else')
+         // console.log(res.tempFilePath)
+          let videoList=res.tempFilePath
+         // console.log(videoList)
+          that.setData({
+            videoList: res.tempFilePath,
+            size: (res.size / (1024 * 1024)).toFixed(2)
+          })
+          //console.log(this.data.videoList)
+       
+       
+      }
+    })
+    console.log(this.data.videoList)
+  }, //end of ChooseVideo
   ChooseImage() {
     //图像选择
     wx.chooseImage({
@@ -79,19 +108,37 @@ Page({
         }
       }
     });
-  },
+  },// end of ChooseImage
+
   ViewImage(e) {
     wx.previewImage({
       urls: this.data.imgList,
       current: e.currentTarget.dataset.url
     });
   },
+  DelVideo(e) {
+    wx.showModal({
+      title: '湖南电台',
+      content: '确定要删除此视频吗？',
+      cancelText: '取消',
+      confirmText: '确定',
+      success: res => {
+        if (res.confirm) {
+          //this.data.imgList.splice(e.currentTarget.dataset.index, 1);
+          this.setData({
+            videoList:null,
+            size:null
+          })
+        }
+      }
+    })
+  },// end of DelVideo
   DelImg(e) {
     wx.showModal({
       title: '湖南电台',
       content: '确定要删除这张图片吗？',
-      cancelText: '再看看',
-      confirmText: '再见',
+      cancelText: '取消',
+      confirmText: '确定',
       success: res => {
         if (res.confirm) {
           this.data.imgList.splice(e.currentTarget.dataset.index, 1);
@@ -101,7 +148,7 @@ Page({
         }
       }
     })
-  },
+  },// end of DelImg
 
   submitForm(e) {
     console.log('submit form')
@@ -109,9 +156,34 @@ Page({
     let content = this.data.content
     let dtype = this.data.dtype
     let uid = this.data.uid
-
+    let video=this.data.videoList
+    let size=this.data.size
+    console.log(this.data.size)
+    if (this.data.size > 10) {
+      wx.showModal({
+        title: '传输覆盖',
+        content: '很抱歉，视频最大允许10M，当前为' + (this.data.size + 'M')
+      })
+      return false;
+    } 
+   
     if (title && content) {
-      const arr = []
+      wx.showLoading({
+        title: '正在创建...',
+        mask: true
+      })
+      let arr=[]
+      if (video){
+
+      
+      arr.push(wxUploadFile({
+        //url: 'http://172.18.42.183:8080/pyapp/Info/upload',
+        url: 'https://fg.heyishe.cn/wx/Info/uploadv',
+        filePath: video,
+        name: 'uploadv',
+      }))
+      }
+     // const arr = []
       // 将选择的图片组成一个Promise数组，准备进行并行上传
       for (let path of this.data.imgList) {
         arr.push(wxUploadFile({
@@ -121,13 +193,23 @@ Page({
           name: 'uploadimg',
         }))
       }
+     // console.log('uvideo='+arr)
       console.log('arr===')
       console.log(arr)
       Promise.all(arr).then(res => {
         // 上传成功，获取这些图片在服务器上的地址，组成一个数组
-        //console.log(res)
+        console.log(res)
         let imgs = res.map(item => JSON.parse(item.data).url)
+       // let uvideo = res.map(item => JSON.parse(item.data).url)
+       console.log('++++++++++++++++')
         console.log(imgs)
+        let uvideo =null
+        if(imgs&&size) {
+          uvideo=imgs[0]
+          imgs.splice(0,1)
+        }
+        console.log(imgs)
+        console.log(uvideo)
         var that = this;
         let url = 'Info/Addnews/';
         let data = {
@@ -136,16 +218,29 @@ Page({
           dtype: dtype,
           imgs: imgs,
           uid: uid,
+          uvideo: uvideo,
           fst_id: this.data.dtype
         }
         http.postReq(url, data).then(function (res) {
           console.log(res)
 
         })
-
+        wx.switchTab({
+          url: '../../pages/all_error/index'
+        })
       }).catch(err => {
         console.log(">>>> upload images error:", err)
-      })
+      
+        wx.showModal({
+          title: '错误',
+          content: '上传 错误，请重试！',
+          showCancel: false
+        });
+       
+        }).then(() => {
+          console.log('then...')
+          wx.hideLoading()
+        })
       /*
       
 
@@ -216,6 +311,7 @@ Page({
       */
     } else {
       console.log('请输入所有项目')
+     
       wx.showModal({
         title: '错误',
         content: '请输入所有必填项目',
