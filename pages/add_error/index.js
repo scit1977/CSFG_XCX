@@ -2,7 +2,7 @@
 import { promisify } from '../../utils/promise.util'
 const wxUploadFile = promisify(wx.uploadFile)
 const http = require('../../utils/http.js')
-var util = require('../../utils/util.js')
+let util = require('../../utils/util.js')
 Page({
 
   /**
@@ -13,7 +13,6 @@ Page({
     content: '',//内容
     titleCount: 0, //标题字数
     contentCount: 0, //正文字数
-
     date: null,
     textareaBValue: '',
     picker: [],
@@ -22,10 +21,12 @@ Page({
     imgList: [],
     videoList:null,
     size:null,
-    uid: ''
+    uid: '',
+    tname:'',
+    hasrole:0  //是否有权限
   },
   PickerChange(e) {
-    //类型选择处理
+    //发射台选择处理
     console.log(e);
     let index0 = e.detail.value
     this.setData({
@@ -72,19 +73,14 @@ Page({
       sourceType: ['album', 'camera'],
       maxDuration: 60,
       camera: 'back',
-      success: function (res) {
-        console.log(res)
-       
-         // console.log('else')
-         // console.log(res.tempFilePath)
-          let videoList=res.tempFilePath
-         // console.log(videoList)
+      success: function (res) {      
+        
+          let videoList=res.tempFilePath        
           that.setData({
             videoList: res.tempFilePath,
             size: (res.size / (1024 * 1024)).toFixed(2)
           })
-          //console.log(this.data.videoList)
-       
+         
        
       }
     })
@@ -149,15 +145,109 @@ Page({
       }
     })
   },// end of DelImg
-
-  submitForm(e) {
-    console.log('submit form')
+  
+  dosubmit(){
+    //提交数据
     let title = this.data.title
     let content = this.data.content
     let dtype = this.data.dtype
     let uid = this.data.uid
-    let video=this.data.videoList
+    let video = this.data.videoList
+    let size = this.data.size
+    wx.showLoading({
+      title: '正在创建...',
+      mask: true
+    })
+    let arr = []
+    if (video) {
+
+
+      arr.push(wxUploadFile({
+        //url: 'http://172.18.42.183:8080/pyapp/Info/upload',
+        url: 'https://fg.heyishe.cn/wx/Info/uploadv',
+        filePath: video,
+        name: 'uploadv',
+      }))
+    }
+    // const arr = []
+    // 将选择的图片组成一个Promise数组，准备进行并行上传
+    for (let path of this.data.imgList) {
+      arr.push(wxUploadFile({
+        //url: 'http://172.18.42.183:8080/pyapp/Info/upload',
+        url: 'https://fg.heyishe.cn/wx/Info/upload',
+        filePath: path,
+        name: 'uploadimg',
+      }))
+    }
+    // console.log('uvideo='+arr)
+
+    Promise.all(arr).then(res => {
+      // 上传成功，获取这些图片在服务器上的地址，组成一个数组
+
+      let imgs = res.map(item => JSON.parse(item.data).url)
+      // let uvideo = res.map(item => JSON.parse(item.data).url)
+
+      let uvideo = null
+      if (imgs && size) {
+        uvideo = imgs[0]
+        imgs.splice(0, 1)
+      }
+
+      var that = this;
+      let url = 'Info/Addnews/';
+      let data = {
+        title: title,
+        content: content,
+        dtype: dtype,
+        imgs: imgs,
+        uid: uid,
+        uvideo: uvideo,
+        fst_id: this.data.dtype
+      }
+      http.postReq(url, data).then(function (res) {
+        console.log(res)
+
+      })
+      wx.switchTab({
+        url: '../../pages/all_error/index'
+      })
+    }).catch(err => {
+      console.log(">>>> upload images error:", err)
+
+      wx.showModal({
+        title: '错误',
+        content: '上传 错误，请重试！',
+        showCancel: false
+      });
+
+    }).then(() => {
+      console.log('then...')
+      wx.hideLoading()
+    })
+
+  },// end of dosubmit
+  submitForm(e) {
+
+    console.log('submit form')
+    console.log(this.data.hasrole)
+    console.log(this.data.hasrole == "0")
+
+    let title = this.data.title
+    let content = this.data.content   
     let size=this.data.size
+    if (this.data.hasrole == "0") {
+      wx.showModal({
+        title: '提示',
+        content: '权限不足，请先完善您的个人信息',
+        text: 'center',
+        complete() {
+          wx.switchTab({
+            url: '/pages/mine/index'
+          })
+        }
+      })
+      return false;
+    }
     console.log(this.data.size)
     if (this.data.size > 10) {
       wx.showModal({
@@ -168,147 +258,8 @@ Page({
     } 
    
     if (title && content) {
-      wx.showLoading({
-        title: '正在创建...',
-        mask: true
-      })
-      let arr=[]
-      if (video){
-
-      
-      arr.push(wxUploadFile({
-        //url: 'http://172.18.42.183:8080/pyapp/Info/upload',
-        url: 'https://fg.heyishe.cn/wx/Info/uploadv',
-        filePath: video,
-        name: 'uploadv',
-      }))
-      }
-     // const arr = []
-      // 将选择的图片组成一个Promise数组，准备进行并行上传
-      for (let path of this.data.imgList) {
-        arr.push(wxUploadFile({
-          //url: 'http://172.18.42.183:8080/pyapp/Info/upload',
-          url: 'https://fg.heyishe.cn/wx/Info/upload',
-          filePath: path,
-          name: 'uploadimg',
-        }))
-      }
-     // console.log('uvideo='+arr)
-      console.log('arr===')
-      console.log(arr)
-      Promise.all(arr).then(res => {
-        // 上传成功，获取这些图片在服务器上的地址，组成一个数组
-        console.log(res)
-        let imgs = res.map(item => JSON.parse(item.data).url)
-       // let uvideo = res.map(item => JSON.parse(item.data).url)
-       console.log('++++++++++++++++')
-        console.log(imgs)
-        let uvideo =null
-        if(imgs&&size) {
-          uvideo=imgs[0]
-          imgs.splice(0,1)
-        }
-        console.log(imgs)
-        console.log(uvideo)
-        var that = this;
-        let url = 'Info/Addnews/';
-        let data = {
-          title: title,
-          content: content,
-          dtype: dtype,
-          imgs: imgs,
-          uid: uid,
-          uvideo: uvideo,
-          fst_id: this.data.dtype
-        }
-        http.postReq(url, data).then(function (res) {
-          console.log(res)
-
-        })
-        wx.switchTab({
-          url: '../../pages/all_error/index'
-        })
-      }).catch(err => {
-        console.log(">>>> upload images error:", err)
-      
-        wx.showModal({
-          title: '错误',
-          content: '上传 错误，请重试！',
-          showCancel: false
-        });
-       
-        }).then(() => {
-          console.log('then...')
-          wx.hideLoading()
-        })
-      /*
-      
-
+      this.dosubmit()
      
-     
-      wx.showLoading({
-        title: '正在创建...',
-        mask: true
-      })
-      // 开始并行上传图片
-      /*
-      Promise.all(arr).then(res => {
-        // 上传成功，获取这些图片在服务器上的地址，组成一个数组
-        console.log(res)
-        let DD = res.map(item => JSON.parse(item.data).url)
-        return DD
-      }).catch(err => {
-        console.log(">>>> upload images error:", err)
-      }).then(urls => {
-        return createQuestion({
-          title: title,
-          content: content,
-          images: urls
-        })
-      }).then(res => {
-        const pages = getCurrentPages();
-        const currPage = pages[pages.length - 1];
-        const prevPage = pages[pages.length - 2];
-
-       // prevPage.data.questions.unshift(res)
-        //$digest(prevPage)
-
-        //wx.navigateBack()
-      }).catch(err => {
-        console.log(">>>> create question error:", err)
-      }).then(() => {
-        wx.hideLoading()
-      })
-      /*
-      console.log('t')
-      const arr = []
-
-      for (let path of this.data.imgList) {
-        console.log(path)
-        arr.push(
-          wx.uploadFile({
-            //wxUploadFile({
-            url: 'http://172.18.42.183:8080/pyapp/Index/upload',
-            filePath: path,
-            name: 'uploadimg',
-            success: function (res) {
-
-              //打印
-              console.log('ok')
-              console.log(res.data)
-
-            },
-            fail: function (res) {
-              console.log('fail')
-            },
-            complete: function (res) {
-              console.log('cc')
-            }
-
-          })
-        )
-      }
-      */
     } else {
       console.log('请输入所有项目')
      
@@ -331,7 +282,7 @@ Page({
 
   },// end of initdate
   fetchtype() {
-    //获取发射机类型
+    //获取发射机类型及用户信息
     var that = this;
     let url = 'Getfstlist/';
     let data = {
@@ -339,22 +290,25 @@ Page({
     }
     http.postReq(url, data).then(function (res) {
       console.log(res.result)
+      console.log(res.result[0])
+     //console.log(res.result[1])
       that.setData({
         picker: res.result,
         dtype: res.result[0].id,
+        tname: res.info[0].name,
+        hasrole: res.info[0].role
       });
-      console.log(that.data.dtype)
+      console.log('role='+that.data.hasrole)
      
     })
     // console.log(this.data.picker[0].id)
   },// end of  fetchtype
+
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.data.uid = wx.getStorageSync('openid')
-    
-    this.fetchtype()
+   
   },
 
   /**
@@ -368,7 +322,11 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    this.data.uid = wx.getStorageSync('openid')
+
+    this.fetchtype()
     this.initdate()
+    
   },
 
   /**

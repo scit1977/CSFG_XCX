@@ -1,2 +1,33 @@
 <!--pages/all_week/index.wxml-->
-<text>pages/all_week/index.wxml</text>
+<cu-custom bgColor="bg-gradual-blue" isBack="{{false}}"><view slot="content">每周上报</view></cu-custom> <!-- 自定义头部区结束--> 
+<view class='box'>
+   <view class="cu-form-group margin-top">
+		<view class="title">发射台</view>
+		<picker bindchange="PickerChange" value="{{picker[index].id}}" range="{{picker}}"  range-key="{{'fst_name'}}">
+			<view class="picker">
+			{{picker[index].fst_name}} 
+			</view>
+		</picker>
+	</view>
+</view><!--发射台类型结束-->
+<view class="box">
+    <view class="flex solid-bottom padding justify-center">
+  <button class="cu-btn bg-green shadow" bindtap="toadd" data-target="gridModal">立即上报</button>
+  </view>
+</view> <!-- 搜索区结束--> 
+<view class="cu-bar bg-white solid-bottom margin-top">
+    <view class="action">
+      <text class="cuIcon-title text-orange "></text> 最新上报问题
+    </view>
+</view> <!-- 消息列表上区结束--> 
+
+
+<view class="cu-bar bg-white solid-bottom padding " wx:for="{{NewsItems}}" wx:key="{{item.id}}">
+     <navigator url="../detail/index?id={{item.id}}" >
+    <view class="action">
+      <text class="cuIcon-discoverfill text-blue "></text> {{item.title}}
+    </view>
+     </navigator> 
+    <view>{{item.input_date}}</view>
+    
+</view> <!-- 消息列表上区结束--> 

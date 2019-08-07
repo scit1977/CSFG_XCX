@@ -1,2 +1,0 @@
-<!--pages/baoliao/all/index.wxml-->
-<cu-custom bgColor="bg-gradual-pink" isCustom="{{true}}" isBack="{{false}}"><view slot="content">操作条</view></cu-custom>

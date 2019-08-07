@@ -13,7 +13,8 @@ Page({
    shipin:null,
    input_date:null,
    name:null,
-   fst_name:null
+   fst_name:null,
+   hasvideo: false,
   },
   loadnews: function () {
     //postReq(url, data, cb)
@@ -26,7 +27,7 @@ Page({
 
     http.postReq(url, data).then(function (res) {
       console.log(res.result)
-      console.log(res.result.shipin)
+      
       that.setData({
         title: res.result.title,
         content: res.result.content,
@@ -35,10 +36,17 @@ Page({
         input_date: res.result.input_date,
         shipin:res.result.shipin,
         imgs: res.imgs,
+       
 
       });
-      console.log(that.data.imgs)
-      console.log(that.data.shipin)
+      //console.log(that.data.shipin != null)
+      if (that.data.shipin != 'null'){
+       
+        that.setData({
+          hasvideo:true
+        })
+      }
+     
       var WxParse = require('../../wxParse/wxParse.js');
       WxParse.wxParse('content', 'html', that.data.content, that, 25);
     })
@@ -64,7 +72,7 @@ Page({
   onLoad: function (options) {
    
     let id = options.id;
-    console.log('news id=' + options)
+   
     this.setData({
       id: id,
     

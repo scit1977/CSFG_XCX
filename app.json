@@ -2,9 +2,12 @@
   "pages": [
     "pages/index/index",    
     "pages/add_error/index",
+    "pages/add_week/index",
     "pages/mine/index",
     "pages/all_week/index",
     "pages/detail/index",
+    "pages/info/info",
+    "pages/address/address",
     "pages/all_error/index",
     "pages/authorize/authorize"
   ],
@@ -26,19 +29,19 @@
         "selectedIconPath": "images/home-actived.png",
         "pagePath": "pages/index/index"
       },
-      
       {
-        "text": "问题上报",
-        "iconPath": "images/note.png",
-        "selectedIconPath": "images/note_actived.png",
-        "pagePath": "pages/all_error/index"
-      },
-      {
-        "text": "典型问题",
+        "text": "每周上报",
         "iconPath": "images/star.png",
         "selectedIconPath": "images/star-actived.png",
         "pagePath": "pages/all_week/index"
       },
+      {
+        "text": "故障上报",
+        "iconPath": "images/note.png",
+        "selectedIconPath": "images/note_actived.png",
+        "pagePath": "pages/all_error/index"
+      },
+      
       {
         "text": "个人中心",
         "iconPath": "images/profile.png",

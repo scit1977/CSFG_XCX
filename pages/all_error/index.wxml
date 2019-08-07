@@ -19,22 +19,18 @@
     <view class="action">
       <text class="cuIcon-title text-orange "></text> 最新上报问题
     </view>
-  </view> <!-- 消息列表上区结束--> 
-  <view class="cu-list menu-avatar">
-    <view class="cu-item"  wx:for="{{NewsItems}}" wx:key="{{item.id}}">
-   
-      <view class="cu-avatar round lg" style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big10001.jpg);"></view>
-       <navigator url="../detail/index?id={{item.id}}" class="nag">
-      <view class="content">
-      
-        <view class="text-grey">{{item.title}}</view> 
-            
-      </view>
-        </navigator> 
-      <view class="action">
-        <view class="text-grey text-xs">{{item.input_date}}</view>      
-      </view>
-     
-    </view><!-- 单条消息结束-->
+</view> <!-- 消息列表上区结束--> 
+
+
+<view class="cu-bar bg-white solid-bottom padding " wx:for="{{NewsItems}}" wx:key="{{item.id}}">
+     <navigator url="../detail/index?id={{item.id}}" >
+    <view class="action">
+      <text class="cuIcon-discoverfill text-blue "></text> {{item.title}}
+    </view>
+     </navigator> 
+    <view>{{item.input_date}}</view>
     
-  </view> <!-- 消息列表下区结束--> 
+</view> <!-- 消息列表上区结束--> 
+
+ 
+    
