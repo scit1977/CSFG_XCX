@@ -19,8 +19,7 @@ Page({
    */
   onLoad: function (options) {
 
-    this.data.uid = wx.getStorageSync('openid')
-    console.log(this.data.uid)
+   
 
 
   },
@@ -32,10 +31,12 @@ Page({
 
   },
   NewsItemsShow: function (success) {
+    let fst_id = this.data.dtype
+    console.log('fst_id=' + fst_id)
     var that = this;
-    let url = 'GetweekItemsList/';
+    let url = 'Getweeklist/';
     let data = {
-      fst_id: this.data.dtype
+      fst_id: fst_id
     }
 
     http.postReq(url, data).then(function (res) {
@@ -55,10 +56,10 @@ Page({
       dtype: this.data.picker[index0].id,
     })
     console.log(e.detail.value);
-    //this.NewsItemsShow();
+    this.NewsItemsShow();
   },//end of PickerChange
   fetchtype() {
-    //获取发射机类型
+    //获取发射台类型
     var that = this;
     let url = 'Getfstlist/';
     let data = {
@@ -70,6 +71,7 @@ Page({
         picker: res.result,
         dtype: res.result[0].id,
       });
+      that.NewsItemsShow()
       console.log(that.data.dtype)
      // that.NewsItemsShow()
     })
@@ -86,7 +88,11 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+   
+    this.data.uid = wx.getStorageSync('openid')
     this.fetchtype()
+   
+    console.log(this.data.uid)
   },
 
   /**

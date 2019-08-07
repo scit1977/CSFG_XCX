@@ -33,7 +33,7 @@ Page({
   },
   NewsItemsShow: function (success) {
     var that = this;
-    let url = 'GetweekItemsList/';
+    let url = 'Getnewsitemslist/';
     let data = {
       fst_id:this.data.dtype
     }

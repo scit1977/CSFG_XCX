@@ -1,0 +1,118 @@
+<!--pages/detail_week/index.wxml-->
+<!--pages/add_week/index.wxml-->
+<cu-custom bgColor="bg-gradual-blue" isCustom="{{true}}"><view slot="content">详细信息</view></cu-custom> <!-- 自定义头部区结束--> 
+<form>
+<view class='box'>
+   <view class="cu-form-group margin-top">
+		<view class="title">发射台</view>
+		<picker bindchange="PickerChange" value="{{picker[index].id}}" range="{{picker}}"  range-key="{{'fst_name'}}" disabled="true">
+			<view class="picker">
+			{{picker[index].fst_name}} 
+			</view>
+		</picker>
+	</view>
+</view><!--发射台类型结束-->
+  <view class="cu-form-group">
+		<view class="title">日期选择</view>
+		<picker mode="date" value="{{date}}" start="{{date}}" end="{{date}}" bindchange="DateChange" disabled="true">
+			<view class="picker">
+				{{date}}
+			</view>
+		</picker>
+	</view><!--日期结束-->
+  <view class="cu-bar bg-white solid-bottom margin-top">
+  <view class="action">
+    <text class="icon-title text-orange"></text> 应填写{{totalnum}}个,已填写{{todonum}}个频道。
+  </view>
+  <view class="action">
+    
+  </view>
+</view>
+<view class="bg-white padding">
+  <view class="cu-steps">
+    <view class="cu-item {{item.id==pdindex?'text-blue':''}}" wx:for="{{pdList}}"  wx:key>
+      <view bindtap="Steps" data-id='{{item}}'> <text class='num'></text>{{item.fst_pd}}</view>
+    </view>
+  </view>
+</view><!--频道块结束-->
+  <view class="cu-bar bg-white margin-top">
+		<view class="action">
+			工作频率 <text class="text-red">（*）</text>
+		</view>
+		<view class="action">
+			<input placeholder="" bindinput="handle_work_fre" type='digit' value='{{work_fre}}'></input>
+		</view>
+	<!--工作频率结束-->
+  
+		<view class="action">
+			入射功率 <text class="text-red">（*）</text>
+		</view>
+		<view class="action">
+			<input placeholder="" bindinput="handle_in_power" type='digit' value='{{in_power}}'></input>
+		</view><!--入射功率结束-->
+	</view><!--第一行结束-->
+  <view class="cu-bar bg-white margin-top">
+		<view class="action">
+			反射功率 <text class="text-red">（*）</text>
+		</view>
+		<view class="action">
+			<input placeholder="" bindinput="handle_back_power" type='digit' value='{{back_power}}'></input>
+		</view><!--反射功率结束-->  
+		<view class="action">
+			驻 波 比 <text class="text-red">（*）</text>
+		</view>
+		<view class="action">
+			<input placeholder="" bindinput="handle_zhubo" type='digit' value='{{zhubo}}'></input>
+		</view><!--驻波比结束-->
+	</view><!--第二行结束-->
+    <view class="cu-bar bg-white margin-top">
+		<view class="action">
+			功放电压 <text class="text-red">（*）</text>
+		</view>
+		<view class="action">
+			<input placeholder="" bindinput="handle_amb_v" type='digit' value='{{amb_v}}'></input>
+		</view><!--反射功率结束-->  
+		<view class="action">
+			功放电流 <text class="text-red">（*）</text>
+		</view>
+		<view class="action">
+			<input placeholder="" bindinput="handle_amb_a" type='digit' value='{{amb_a}}'></input>
+		</view><!--驻波比结束-->
+	</view><!--第三行结束-->
+   <view class="cu-bar bg-white margin-top">
+		<view class="action">
+			主用信号源
+		</view>
+		<view class="action">
+			 <switch class="orange radius sm" checked="{{main_signal}}" bindchange="listenerSwitchm"></switch>
+		</view><!--反射功率结束-->  
+		<view class="action">
+			备用信号源 
+		</view>
+		<view class="action">
+		 <switch class="orange radius sm" checked="{{back_signal}}" bindchange="listenerSwitchb"></switch>
+		</view><!--驻波比结束-->
+	</view><!--第四行结束-->
+  <view class="cu-bar bg-white margin-top">
+		<view class="action">
+			备注
+		</view>
+	
+	</view><!--标题块结束-->
+  <view class="cu-form-group ">
+	
+		<textarea maxlength="500"  bindinput="textareaBInput" placeholder="请输入其他信息描述" value='{{content}}'></textarea>
+	</view><!--内容结束-->
+   <view class="cu-bar bg-white margin-top">
+		<view class="action">
+			提交人： {{tname}}
+	</view>
+		
+	</view><!--提交人结束-->
+  <view class="box margin-top"  wx:if="{{pdname}}">
+   <view class="cu-bar btn-group">
+    <button class="cu-btn bg-green shadow-blur round lg " bindtap="submitForm">{{posttype}} {{pdname}} 数据</button>
+    </view>
+  </view><!--按钮结束-->
+</form>
+

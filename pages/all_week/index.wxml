@@ -17,13 +17,13 @@
 </view> <!-- 搜索区结束--> 
 <view class="cu-bar bg-white solid-bottom margin-top">
     <view class="action">
-      <text class="cuIcon-title text-orange "></text> 最新上报问题
+      <text class="cuIcon-title text-orange "></text> 最新周报
     </view>
 </view> <!-- 消息列表上区结束--> 
 
 
 <view class="cu-bar bg-white solid-bottom padding " wx:for="{{NewsItems}}" wx:key="{{item.id}}">
-     <navigator url="../detail/index?id={{item.id}}" >
+     <navigator url="../detail_week/index?date={{item.title}}&fst_id={{dtype}}" >
     <view class="action">
       <text class="cuIcon-discoverfill text-blue "></text> {{item.title}}
     </view>
