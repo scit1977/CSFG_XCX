@@ -377,7 +377,7 @@ Page({
    */
   onLoad: function (options) {
     this.data.uid = wx.getStorageSync('openid')
-    let date = options.date;
+    let date = options.date.substring(0,10);
     let fst_id=options.fst_id
 
     this.setData({

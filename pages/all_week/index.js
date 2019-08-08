@@ -40,6 +40,7 @@ Page({
     }
 
     http.postReq(url, data).then(function (res) {
+      console.log('res.result =')
       console.log(res.result)
       that.setData({
         NewsItems: res.result

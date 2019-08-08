@@ -21,7 +21,7 @@
 	</view><!--日期结束-->
   <view class="cu-bar bg-white solid-bottom margin-top">
   <view class="action">
-    <text class="icon-title text-orange"></text> 应填写{{totalnum}}个,已填写{{todonum}}个频道。
+    <text class="icon-title text-orange"></text> 应填写{{totalnum}}个,已填写{{todonum}}个发射机。
   </view>
   <view class="action">
     
@@ -33,7 +33,7 @@
       <view bindtap="Steps" data-id='{{item}}'> <text class='num'></text>{{item.fst_pd}}</view>
     </view>
   </view>
-</view><!--频道块结束-->
+</view><!--发射机块结束-->
   <view class="cu-bar bg-white margin-top">
 		<view class="action">
 			工作频率 <text class="text-red">（*）</text>

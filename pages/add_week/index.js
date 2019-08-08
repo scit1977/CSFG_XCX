@@ -8,15 +8,15 @@ Page({
    */
   data: {
     date: null,
-    picker: [],
-    index: 0,
+    picker: [],//发射台数组
+    index: 0, //选中的发射台数组序号
     dtype: null,
     uid: '',
     tname: '',
     hasrole: 0,  //是否有权限
-    pdList:null,
-    pdindex:0, //频道编号  
-    pdname:'', //频道名称
+    pdList:null,//发射机数组
+    pdindex:0, //发射机编号  
+    pdname:'', //发射机名称
     work_fre:'',
     in_power:'',
     back_power:'',
@@ -216,6 +216,7 @@ Page({
 
   get_log_dat(){
     //获取频道发射机对应日期数据
+    console.log('get_log_data')
     var that = this;
     let url = 'Getfsjdata/';
     let data = {
@@ -339,6 +340,7 @@ Page({
         pdindex: res.result[0].id,
         pdname: res.result[0].fst_pd       
       });
+      that.get_log_dat() //调取当日 对应频道数据
       //console.log('pdList=' + that.data.pdList)
       //console.log('res.result[0].pdname=' + res.result[0])
       //console.log('pdname=' + that.data.pdname)
