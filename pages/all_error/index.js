@@ -26,7 +26,7 @@ Page({
   },
   toadd:function(){
     //页面跳转
-    wx.redirectTo({
+    wx.navigateTo({
       url: '../add_error/index',
     })
 

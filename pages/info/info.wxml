@@ -1,13 +1,11 @@
 <!--pages/info/info.wxml-->
 <!--pages/address/address.wxml-->
 <cu-custom bgColor="bg-gradual-blue" isCustom="{{true}}"><view slot="content">个人信息</view></cu-custom>
-<form bindsubmit="formSubmit" class='myform'>
+<form bindsubmit="submitForm" class='myform'>
     
       <!--表单内容开始-->
       <view class="cu-form-group">
-        <button class='pop_btn' plain="true"
-
-open-type='getPhoneNumber' bindgetphonenumber="getPhoneNumber">获取用户手机号</button>
+        
       </view>
 
               <!--手机号码-->

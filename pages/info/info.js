@@ -1,39 +1,116 @@
 // pages/info/info.js
+const http = require('../../utils/http.js')
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-
+    uid: null,
+    disabled:false,
+    phoneNum: '',
+    tname: '',
   },
-
-  getPhoneNumber: function (e) {
-    console.log(e.detail.errMsg)
-    console.log(e.detail.iv)
-    console.log(e.detail.encryptedData)
-    if (e.detail.errMsg == 'getPhoneNumber:fail user deny') {
-      wx.showModal({
-        title: '提示',
-        showCancel: false,
-        content: '未授权',
-        success: function (res) { }
-      })
+  addnameInfo: function (e) {
+    //姓名输入
+    let tname = e.detail.value
+    this.setData({
+      tname: tname
+    })
+    console.log('tname =' + tname)
+  },
+  inputPhoneNum: function (e) {
+    // 手机号码输入
+    // console.log('inputPhoneNum 函数')
+    let phoneNum = e.detail.value
+    this.setData({
+      phoneNum: phoneNum
+    })
+    console.log('phoneNum =' + phoneNum)
+      //this.hideSendMsg()
+    
+  },
+  checktname: function (tname) {
+    if (tname.length>1){
+      return true
     } else {
       wx.showModal({
-        title: '提示',
-        showCancel: false,
-        content: '同意授权',
-        success: function (res) { }
-      })
+        title: '错误',
+        content: '请输入姓名!',
+        showCancel: false
+      });
+
+
+      return false
     }
   },
+  checkPhoneNum: function (phoneNum) {
+    //检查手机格式是否正确
+    let str = /^1[3-9][0-9]\d{8}$/  // if (!value.tel.match(/^1[3-9][0-9]\d{8}$/)) {
+    if (str.test(phoneNum)) {
+      return true
+    } else {
+      wx.showModal({
+        title: '错误',
+        content: '手机号格式不正确!',
+        showCancel: false
+      });
+
+
+      return false
+    }
+  },
+  dosubmit() {
+    //提交数据
+    let uid = this.data.uid//+" "+ pdname
+    let phoneNum = this.data.phoneNum
+    let tname = this.data.tname
+    var that = this;
+    let url = 'Editinfo/';
+    let data = {
+      uid: uid,
+      phoneNum: phoneNum,
+      tname: tname
+    }
+    http.postReq(url, data).then(function (res) {
+      console.log(res)
+      if (res == 'ok') {
+        that.get_log_dat()
+        wx.showToast({
+          title: '提交成功',
+          icon: 'succes',
+          duration: 1000,
+          mask: true
+        })
+      }
+
+    }) 
+  }, 
+  submitForm(e) {
+    //提交表单
+    console.log('submit form')
+    let phoneNum = this.data.phoneNum
+    let tname = this.data.tname
+
+    
+    let checkedNum = this.checkPhoneNum(phoneNum)
+    let checktname=this.checktname(tname)
+    //  console.log('checked='+checkedNum)
+    if( (checkedNum)&& (checktname)) {
+        
+        //  console.log('phoneNum' + this.data.phoneNum)
+        this.dosubmit()
+        
+      }
+    
+
+  },  
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    this.data.uid = wx.getStorageSync('openid')
   },
 
   /**

@@ -50,7 +50,8 @@ App({
             var data = res.data;            
             that.globalData.openid = data["uid"]
             wx.setStorageSync('openid', data["uid"])    
-            console.log('uid=='+data["uid"])               
+            console.log('uid=='+data["uid"])   
+                       
           },
           fail: res => {
             toast.show({ content: '微信登录失败' });
