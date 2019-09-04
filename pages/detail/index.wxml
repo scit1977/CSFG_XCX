@@ -20,7 +20,7 @@
 		 <view class="title">提交人：{{name}} </view>
    </view> 
  </view> <!-- 标题区结束--> 
-  <view class='box'>
+ <view class='box'>
    <view class="cu-form-group margin-top">
 		 <view class="title">提交时间：{{input_date}}</view>
    </view> 

@@ -1,6 +1,9 @@
 <!--pages/detail_week/index.wxml-->
 <!--pages/add_week/index.wxml-->
-<cu-custom bgColor="bg-gradual-blue" isCustom="{{true}}"><view slot="content">详细信息</view></cu-custom> <!-- 自定义头部区结束--> 
+<cu-custom bgColor="bg-gradual-blue" isBack="{{true}}">
+	<view slot="backText">返回</view>
+	<view slot="content">周报查看</view>
+</cu-custom> <!-- 自定义头部区结束--> <!-- 自定义头部区结束--> 
 <form>
 <view class='box'>
    <view class="cu-form-group margin-top">
@@ -93,6 +96,27 @@
 		 <switch class="orange radius sm" checked="{{back_signal}}" bindchange="listenerSwitchb"></switch>
 		</view><!--驻波比结束-->
 	</view><!--第四行结束-->
+   <view class="cu-bar bg-white margin-top">
+		<view class="action">
+			图片上传
+		</view>
+		<view class="action">
+			{{imgList.length}}/1
+		</view>
+	</view><!--图片标题块结束-->
+  <view class="cu-form-group">
+		<view class="grid col-4 grid-square flex-sub">
+			<view class="bg-img" wx:for="{{imgList}}" wx:key="{{imgindex}}" bindtap="ViewImage" data-url="{{imgList[imgindex]}}">
+				<image src='{{imgList[imgindex]}}' mode='aspectFill'></image>
+				<view class="cu-tag bg-red" catchtap="DelImg" data-index="{{imgindex}}">
+					<text class="cuIcon-close"></text>
+				</view>
+			</view>
+			<view class="solids" bindtap="ChooseImage" wx:if="{{imgList.length<1}}">
+				<text class="cuIcon-cameraadd"></text>
+			</view>
+		</view>
+	</view><!--图片结束-->
   <view class="cu-bar bg-white margin-top">
 		<view class="action">
 			备注

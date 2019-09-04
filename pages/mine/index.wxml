@@ -1,5 +1,5 @@
 <!--pages/mine/index.wxml-->
-<cu-custom bgColor="bg-gradual-blue" isCustom="{{true}}"><view slot="content">个人中心</view></cu-custom>
+<cu-custom bgColor="bg-gradual-blue" isBack="{{false}}"><view slot="content">个人中心</view></cu-custom> <!-- 自定义头部区结束--> 
 <view class="userinfo">
   <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo" class="userinfo-btn"> 点击微信授权 </button>
   <block wx:else>
@@ -17,12 +17,7 @@
 <view class="separate"></view>
 <view class="separate"></view>
 <view class="user-menu">
-    <view class="item">
-      <navigator url="../myorder/myorder" class="a">
-        <text class="icon order"></text>
-        <text class="txt">我的提问</text>
-      </navigator>
-    </view>
+   
     
     
     <view class="item">

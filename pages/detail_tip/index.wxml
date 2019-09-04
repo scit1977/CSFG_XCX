@@ -1,0 +1,32 @@
+<!--pages/detail_tip/index.wxml-->
+<cu-custom bgColor="bg-gradual-blue" isBack="{{true}}">
+	<view slot="backText">返回</view>
+	<view slot="content">经验交流查看</view>
+</cu-custom> <!-- 自定义头部区结束--> 
+ <import src="../../wxParse/wxParse.wxml"/>
+  
+ <view class='box'>
+   <view class="cu-form-group margin-top">
+		 <view class="title">标题：{{title}}</view>
+   </view> 
+ </view> <!-- 标题区结束--> 
+ <view class='box'>
+   <view class="cu-form-group margin-top">
+		 <view class="title">发布时间：{{input_date}}</view>
+   </view> 
+ </view> <!-- 标题区结束--> 
+  <view class="cu-bar bg-white solid-bottom margin-top">
+  <view class="action">
+    <text class="cuIcon-title text-blue"></text>	内容：
+  </view>
+</view>
+<view class="padding bg-white">
+  <view class="text-left padding"> <template is="wxParse"  data="{{wxParseData:content.nodes}}"/></view>
+</view><!-- 内容区结束--> 
+
+ <view class="box margin-top">
+   <view class="cu-bar btn-group">
+    <button class="cu-btn bg-green shadow-blur round lg " bindtap="toback">返回</button>
+    </view>
+   </view> <!-- 返回区结束--> 
+

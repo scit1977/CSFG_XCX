@@ -1,5 +1,9 @@
 <!--pages/add_week/index.wxml-->
-<cu-custom bgColor="bg-gradual-blue" isCustom="{{true}}"><view slot="content">在线提交</view></cu-custom> <!-- 自定义头部区结束--> 
+<cu-custom bgColor="bg-gradual-blue" isBack="{{true}}">
+	<view slot="backText">返回</view>
+	<view slot="content">周报提交</view>
+</cu-custom> <!-- 自定义头部区结束-->
+ 
 <form>
 <view class='box'>
    <view class="cu-form-group margin-top">
@@ -36,7 +40,7 @@
 </view><!--发射机块结束-->
   <view class="cu-bar bg-white margin-top">
 		<view class="action">
-			工作频率 <text class="text-red">（*）</text>
+			<text class="title">工作频率 </text> <text class="text-red">（MHZ）</text>
 		</view>
 		<view class="action">
 			<input placeholder="" bindinput="handle_work_fre" type='digit' value='{{work_fre}}'></input>
@@ -44,7 +48,7 @@
 	<!--工作频率结束-->
   
 		<view class="action">
-			入射功率 <text class="text-red">（*）</text>
+			<text class="title">入射功率 </text> <text class="text-red">（KW）</text>
 		</view>
 		<view class="action">
 			<input placeholder="" bindinput="handle_in_power" type='digit' value='{{in_power}}'></input>
@@ -52,13 +56,13 @@
 	</view><!--第一行结束-->
   <view class="cu-bar bg-white margin-top">
 		<view class="action">
-			反射功率 <text class="text-red">（*）</text>
+			反射功率 <text class="text-red">（W）</text>
 		</view>
 		<view class="action">
 			<input placeholder="" bindinput="handle_back_power" type='digit' value='{{back_power}}'></input>
 		</view><!--反射功率结束-->  
 		<view class="action">
-			驻 波 比 <text class="text-red">（*）</text>
+			驻 波 比 <text class="text-red">*</text>
 		</view>
 		<view class="action">
 			<input placeholder="" bindinput="handle_zhubo" type='digit' value='{{zhubo}}'></input>
@@ -66,13 +70,13 @@
 	</view><!--第二行结束-->
     <view class="cu-bar bg-white margin-top">
 		<view class="action">
-			功放电压 <text class="text-red">（*）</text>
+			功放电压 <text class="text-red">（V）</text>
 		</view>
 		<view class="action">
 			<input placeholder="" bindinput="handle_amb_v" type='digit' value='{{amb_v}}'></input>
 		</view><!--反射功率结束-->  
 		<view class="action">
-			功放电流 <text class="text-red">（*）</text>
+			功放电流 <text class="text-red">（A）</text>
 		</view>
 		<view class="action">
 			<input placeholder="" bindinput="handle_amb_a" type='digit' value='{{amb_a}}'></input>
@@ -92,6 +96,27 @@
 		 <switch class="orange radius sm" checked="{{back_signal}}" bindchange="listenerSwitchb"></switch>
 		</view><!--驻波比结束-->
 	</view><!--第四行结束-->
+  <view class="cu-bar bg-white margin-top">
+		<view class="action">
+			图片上传
+		</view>
+		<view class="action">
+			{{imgList.length}}/1
+		</view>
+	</view><!--图片标题块结束-->
+  <view class="cu-form-group">
+		<view class="grid col-4 grid-square flex-sub">
+			<view class="bg-img" wx:for="{{imgList}}" wx:key="{{imgindex}}" bindtap="ViewImage" data-url="{{imgList[imgindex]}}">
+				<image src='{{imgList[imgindex]}}' mode='aspectFill'></image>
+				<view class="cu-tag bg-red" catchtap="DelImg" data-index="{{imgindex}}">
+					<text class="cuIcon-close"></text>
+				</view>
+			</view>
+			<view class="solids" bindtap="ChooseImage" wx:if="{{imgList.length<1}}">
+				<text class="cuIcon-cameraadd"></text>
+			</view>
+		</view>
+	</view><!--图片结束-->
   <view class="cu-bar bg-white margin-top">
 		<view class="action">
 			备注

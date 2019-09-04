@@ -1,0 +1,44 @@
+<!--pages/board/index.wxml-->
+<cu-custom bgColor="bg-gradual-blue" isBack="{{false}}"><view slot="content">公告通知</view></cu-custom> <!-- 自定义头部区结束--> 
+<view class="cu-bar bg-white solid-bottom margin-top">
+    <view class="action">
+      <text class="cuIcon-title text-orange "></text> 最新通知
+    </view>
+    <view class="action">
+      <navigator url="../more_board/index" > <view class="cu-tag round bg-orange light">更多</view> </navigator> 
+    </view>
+</view> <!-- 消息列表上区结束--> 
+
+
+<view class="cu-bar bg-white solid-bottom padding " wx:for="{{bordItems}}" wx:key="{{item.id}}">
+     <navigator url="../detail_board/index?id={{item.id}}" >
+    <view class="action">
+    
+      <text class="cuIcon-warn text-red "></text> {{item.title}}
+    </view>
+     </navigator> 
+    <view>{{item.input_date}}</view>
+    
+</view> <!-- 消息列表上区结束--> 
+
+<view class="cu-bar bg-white solid-bottom margin-top">
+    <view class="action">
+      <text class="cuIcon-title text-orange "></text> 经验交流
+    </view>
+    <view class="action">
+      <navigator url="../more_tip/index" > <view class="cu-tag round bg-olive light">更多</view></navigator> 
+    </view>
+</view> <!-- 消息列表上区结束--> 
+
+
+<view class="cu-bar bg-white solid-bottom padding " wx:for="{{tipItems}}" wx:key="{{item.id}}">
+     <navigator url="../detail_tip/index?id={{item.id}}" >
+    <view class="action">
+      <text class="cuIcon-tagfill text-green "></text> {{item.title}}
+    </view>
+     </navigator> 
+    <view>{{item.input_date}}</view>
+    
+</view> <!-- 消息列表上区结束--> 
+
+ 

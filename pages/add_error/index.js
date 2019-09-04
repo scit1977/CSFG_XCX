@@ -106,12 +106,7 @@ Page({
     });
   },// end of ChooseImage
 
-  ViewImage(e) {
-    wx.previewImage({
-      urls: this.data.imgList,
-      current: e.currentTarget.dataset.url
-    });
-  },
+ 
   DelVideo(e) {
     wx.showModal({
       title: '湖南电台',
@@ -129,9 +124,15 @@ Page({
       }
     })
   },// end of DelVideo
+  ViewImage(e) {
+    wx.previewImage({
+      urls: this.data.imgList,
+      current: e.currentTarget.dataset.url
+    });
+  },
   DelImg(e) {
     wx.showModal({
-      title: '湖南电台',
+      title: '传输覆盖系统',
       content: '确定要删除这张图片吗？',
       cancelText: '取消',
       confirmText: '确定',

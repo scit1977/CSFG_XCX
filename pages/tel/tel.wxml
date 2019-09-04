@@ -1,0 +1,24 @@
+<!--pages/tel/tel.wxml-->
+<cu-custom bgColor="bg-gradual-blue" isBack="{{true}}">
+	<view slot="backText">返回</view>
+	<view slot="content">咨询热线</view>
+</cu-custom> <!-- 自定义头部区结束--> 
+<view class="page"  id="couponDetail" style="background:rgb(248,239,228)">
+  <view class="coupon-wrap">
+    <image src="{{ couponDetail.logoUrl }}" alt="logo" class="logo"></image>
+    <view class="name">{{ couponDetail.appName }}</view>
+    <view class="title">{{ couponDetail.title }}</view>
+    <view class="sub-title">{{ couponDetail.subTitle }}</view>
+   
+    <view class="date">0731-85547260</view>
+  
+  
+    <view class="contact-wrap">
+     
+      
+    </view>
+  </view>
+  <view class="receive-btn"  bindtap="makecall">
+   立即咨询 
+  </view>
+</view>

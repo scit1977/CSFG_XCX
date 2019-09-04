@@ -1,5 +1,5 @@
 <!--index.wxml-->
-<cu-custom bgColor="bg-gradual-blue" isBack="{{false}}"><view slot="backText">返回</view><view slot="content">首页</view></cu-custom> <!-- 自定义头部区结束--> 
+<cu-custom bgColor="bg-gradual-blue" isBack="{{false}}"><view slot="content">首页</view></cu-custom> <!-- 自定义头部区结束--> 
 <!--pages/home/home.wxml-->
  <import src="../../wxParse/wxParse.wxml"/>
 

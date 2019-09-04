@@ -1,6 +1,9 @@
 <!--pages/add_error/index.wxml-->
 <!--pages/baoliao/new/index.wxml-->
-<cu-custom bgColor="bg-gradual-blue" isCustom="{{true}}"><view slot="content">在线提交</view></cu-custom> <!-- 自定义头部区结束--> 
+<cu-custom bgColor="bg-gradual-blue" isBack="{{true}}">
+	<view slot="backText">返回</view>
+	<view slot="content">故障提交</view>
+</cu-custom> <!-- 自定义头部区结束-->
 <form>
 <view class='box'>
    <view class="cu-form-group margin-top">

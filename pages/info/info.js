@@ -7,6 +7,7 @@ Page({
    */
   data: {
     uid: null,
+    sessionid:null,
     disabled:false,
     phoneNum: '',
     tname: '',
@@ -72,6 +73,7 @@ Page({
       phoneNum: phoneNum,
       tname: tname
     }
+    http.header.Authorization = this.data.sessionid;//给header 赋值
     http.postReq(url, data).then(function (res) {
       console.log(res)
       if (res == 'ok') {
@@ -111,6 +113,7 @@ Page({
    */
   onLoad: function (options) {
     this.data.uid = wx.getStorageSync('openid')
+    this.data.sessionid = wx.getStorageSync('sessionid')
   },
 
   /**

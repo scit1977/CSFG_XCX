@@ -10,7 +10,13 @@
     "pages/info/info",
     "pages/address/address",
     "pages/all_error/index",
-    "pages/authorize/authorize"
+    "pages/authorize/authorize",
+    "pages/board/index",
+    "pages/detail_board/index",
+    "pages/more_board/index",
+    "pages/detail_tip/index", 
+    "pages/more_tip/index",   
+    "pages/tel/tel"
   ],
   "window": {
     "navigationBarBackgroundColor": "#39b54a",
@@ -29,6 +35,12 @@
         "iconPath": "images/home.png",
         "selectedIconPath": "images/home-actived.png",
         "pagePath": "pages/index/index"
+      },
+      {
+        "text": "公告通知",
+        "iconPath": "images/board.png",
+        "selectedIconPath": "images/board-actived.png",
+        "pagePath": "pages/board/index"
       },
       {
         "text": "每周上报",

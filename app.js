@@ -16,7 +16,7 @@ App({
           CustomBar = 80
         }
         that.globalData.CustomBar = CustomBar;
-        console.log(that.globalData.CustomBar)
+       
 
         //适配全面屏底部距离
         if (CustomBar > 75) {
@@ -47,10 +47,15 @@ App({
             'content-type': 'application/x-www-form-urlencoded' // 默认值
           },
           success: function (res) {  //后端返回的数据
-            var data = res.data;            
-            that.globalData.openid = data["uid"]
-            wx.setStorageSync('openid', data["uid"])    
-            console.log('uid=='+data["uid"])   
+          //console.log(res.data)
+            let uid = res.data.uid;  
+            let sessionid = res.data.sessionid;           
+            that.globalData.openid = uid
+            that.globalData.sessionid = sessionid
+            wx.setStorageSync('openid', uid) 
+            wx.setStorageSync('sessionid', sessionid)    
+            console.log('init uid=='+uid)   
+            console.log('init sessionid==' + sessionid)  
                        
           },
           fail: res => {
@@ -104,7 +109,8 @@ App({
   globalData: {
     userInfo: null,
     urlPath: 'https://fg.heyishe.cn/wx/',
-    openid: '',
+    openid: null,
+    sessionid:null,
     Custom: null,
     StatusBar: '20',
     CustomBar: '65',

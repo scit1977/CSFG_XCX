@@ -1,0 +1,22 @@
+<!--pages/more_tip/index.wxml-->
+<cu-custom bgColor="bg-gradual-blue" isBack="{{true}}">
+	<view slot="backText">返回</view>
+	<view slot="content">更多经验交流</view>
+</cu-custom> <!-- 自定义头部区结束--> 
+<view class="cu-bar bg-white solid-bottom margin-top">
+    <view class="action">
+      <text class="cuIcon-title text-orange "></text> 经验交流
+    </view>
+   
+</view> <!-- 消息列表上区结束--> 
+
+<view class="cu-bar bg-white solid-bottom padding " wx:for="{{tipItems}}" wx:key="{{item.id}}">
+     <navigator url="../detail_tip/index?id={{item.id}}" >
+    <view class="action">
+    
+      <text class="cuIcon-warn text-red "></text> {{item.title}}
+    </view>
+     </navigator> 
+    <view>{{item.input_date}}</view>
+    
+</view> <!-- 消息列表上区结束--> 

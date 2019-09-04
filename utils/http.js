@@ -1,8 +1,10 @@
 //const api ='https://t.heyishe.cn/wx/'; //'https://wx.heyishe.cn/wxshop/';
-var Promise = require('es6.js')
-const root ='https://fg.heyishe.cn/wx/';// 'https://wx.heyishe.cn/wxshop/';
+let Promise = require('es6.js')
+//获取应用实例
+const app = getApp()
+const root = app.globalData.urlPath;
 
-var header = {
+let header = {
   'Accept': 'application/json',
   'content-type': 'application/x-www-form-urlencoded',
   'Authorization': null,
@@ -40,7 +42,7 @@ function postReq(url, data) {
   wx.showLoading({
     title: '加载中',
   })
-  
+ 
   //data.method = method
   return new Promise((resove, reject) => {
     wx.request({
