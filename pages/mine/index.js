@@ -8,10 +8,14 @@ Page({
     balance: '',
     userInfo: {},
     hasUserInfo: false,//是否有用户信息，默认否
-    canIUse: wx.canIUse('button.open-type.getUserInfo'),
-
+    
   },
-
+  toinfo: function () {
+    //页面跳转
+    wx.navigateTo({
+      url: '../info/info',
+    })
+  },
   onShow: function () {
     //console.log('p onShow')
     if (app.globalData.userInfo) {
@@ -29,12 +33,12 @@ Page({
     } else {
       // 在没有 open-type=getUserInfo 版本的兼容处理
       console.log('跳到授权页面')
-      wx.reLaunch({
-        url: '/pages/authorize/authorize',
-      })
+     // wx.reLaunch({
+       // url: '/pages/authorize/authorize',
+     // })
     }
   },
-
+   
   onLoad: function () {
     //console.log(' Personal.js app.globalData.userInfo=' + app.globalData.userInfo)
     // console.log('p onload')

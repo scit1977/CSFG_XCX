@@ -49,13 +49,17 @@ App({
           success: function (res) {  //后端返回的数据
           //console.log(res.data)
             let uid = res.data.uid;  
-            let sessionid = res.data.sessionid;           
+            let sessionid = res.data.sessionid;  
+            let role = res.data.role;          
             that.globalData.openid = uid
             that.globalData.sessionid = sessionid
+            that.globalData.role = role
             wx.setStorageSync('openid', uid) 
-            wx.setStorageSync('sessionid', sessionid)    
+            wx.setStorageSync('sessionid', sessionid)  
+            wx.setStorageSync('role', role)  
             console.log('init uid=='+uid)   
             console.log('init sessionid==' + sessionid)  
+            console.log('init role==' + role)
                        
           },
           fail: res => {

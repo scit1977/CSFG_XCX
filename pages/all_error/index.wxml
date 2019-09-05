@@ -1,5 +1,5 @@
 <!--pages/all_error/index.wxml-->
-<cu-custom bgColor="bg-gradual-blue" isBack="{{false}}"><view slot="content">问题上报</view></cu-custom> <!-- 自定义头部区结束--> 
+<cu-custom bgColor="bg-gradual-blue" isBack="{{false}}"><view slot="content">故障上报</view></cu-custom> <!-- 自定义头部区结束--> 
 <view class='box'>
    <view class="cu-form-group margin-top">
 		<view class="title">发射台</view>
@@ -17,7 +17,7 @@
 </view> <!-- 搜索区结束--> 
 <view class="cu-bar bg-white solid-bottom margin-top">
     <view class="action">
-      <text class="cuIcon-title text-orange "></text> 最新上报问题
+      <text class="cuIcon-title text-orange "></text> 最新上报故障
     </view>
 </view> <!-- 消息列表上区结束--> 
 

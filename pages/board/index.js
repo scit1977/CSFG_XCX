@@ -9,6 +9,7 @@ Page({
    */
   data: {
     uid: null,
+    role:null,
     sessionid:null,
     bordItems: [],
     tipItems:[],
@@ -57,8 +58,26 @@ Page({
     //判断登录状态结束
     this.data.uid = wx.getStorageSync('openid')
     this.data.sessionid = wx.getStorageSync('sessionid')
-    let sessionid = app.globalData.sessionid
+    this.data.role = wx.getStorageSync('role')
+    let sessionid = this.data.sessionid
+    let role = this.data.role
+    //判断权限
+    if (role!=1){
+      //跳转到个人中心
+      wx.showModal({
+        title: '提示',
+        content: '权限不足，请先注册您的个人信息',
+        text: 'center',
+        complete() {
+          wx.switchTab({
+            url: '/pages/mine/index'
+          })
+        }
+      })
+      return false;
+    }
     console.log('onshow sessionid=' + sessionid)
+    console.log('onshow role=' + role)
     this.fetchbordItems()
   },
 

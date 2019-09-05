@@ -76,8 +76,9 @@ Page({
     http.header.Authorization = this.data.sessionid;//给header 赋值
     http.postReq(url, data).then(function (res) {
       console.log(res)
-      if (res == 'ok') {
-        that.get_log_dat()
+      console.log(res.message)
+      if (res.message == 'ok') {
+        //that.get_log_dat()
         wx.showToast({
           title: '提交成功',
           icon: 'succes',

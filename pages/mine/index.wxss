@@ -1,4 +1,31 @@
 /* pages/mine/mine.wxss */
+.UCenter-bg {
+ 
+  background-color:green;
+  background-size: cover;
+  height: 350rpx;
+  display: flex;
+  justify-content: center;
+  padding-top: 40rpx;
+  overflow: hidden;
+  position: relative;
+  flex-direction: column;
+  align-items: center;
+  color: #fff;
+  font-weight: 300;
+  text-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+}
+
+.UCenter-bg text {
+  opacity: 0.8;
+}
+
+.UCenter-bg image {
+  width: 180rpx;
+  height: 180rpx;
+  border-radius: 50%;
+}
+
 
 .userinfo {
   display: flex;

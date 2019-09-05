@@ -8,6 +8,8 @@ Page({
 
   data: {
     uid: null,
+    role: null,
+    sessionid: null,
     NewsItems: [],
     picker: [],
     index: 0,
@@ -90,10 +92,33 @@ Page({
    */
   onShow: function () {
    
+   
+    //判断登录状态结束
     this.data.uid = wx.getStorageSync('openid')
+    this.data.sessionid = wx.getStorageSync('sessionid')
+    this.data.role = wx.getStorageSync('role')
+    let sessionid = this.data.sessionid
+    let role = this.data.role
+    //判断权限
+    if (role != 1) {
+      //跳转到个人中心
+      wx.showModal({
+        title: '提示',
+        content: '权限不足，请先注册您的个人信息',
+        text: 'center',
+        complete() {
+          wx.switchTab({
+            url: '/pages/mine/index'
+          })
+        }
+      })
+      return false;
+    }
+
+
     this.fetchtype()
    
-    console.log(this.data.uid)
+    
   },
 
   /**
