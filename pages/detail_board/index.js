@@ -39,6 +39,34 @@ Page({
 
 
   },//end of loadnews
+  toattachment: function () {
+    wx.downloadFile({
+
+      url: 'https://fg.heyishe.cn/2019/a1.pdf',
+
+      success: function (res) {
+
+        var filePath = res.tempFilePath
+
+        wx.openDocument({
+
+          filePath: filePath,
+
+          success: function (res) {
+
+            console.log('打开文档成功')
+
+          }
+
+        })
+
+      }
+
+    })
+
+    
+
+  },// end of toattachment
   toback: function () {
     //返回
     wx.navigateBack({
