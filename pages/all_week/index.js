@@ -100,7 +100,7 @@ Page({
     let sessionid = this.data.sessionid
     let role = this.data.role
     //判断权限
-    if (role != 1) {
+    if (role == 0) {
       //跳转到个人中心
       wx.showModal({
         title: '提示',

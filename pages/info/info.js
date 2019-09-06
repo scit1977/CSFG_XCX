@@ -1,5 +1,6 @@
 // pages/info/info.js
 const http = require('../../utils/http.js')
+const relogin = require('../../utils/relogin.js');
 Page({
 
   /**
@@ -12,13 +13,20 @@ Page({
     phoneNum: '',
     tname: '',
   },
+  toback: function () {
+    //返回
+    wx.navigateBack({
+      delta: 1
+    });
+
+  },// end of toback
   addnameInfo: function (e) {
     //姓名输入
     let tname = e.detail.value
     this.setData({
       tname: tname
     })
-    console.log('tname =' + tname)
+    //console.log('tname =' + tname)
   },
   inputPhoneNum: function (e) {
     // 手机号码输入
@@ -27,7 +35,7 @@ Page({
     this.setData({
       phoneNum: phoneNum
     })
-    console.log('phoneNum =' + phoneNum)
+    //console.log('phoneNum =' + phoneNum)
       //this.hideSendMsg()
     
   },
@@ -68,15 +76,30 @@ Page({
     let tname = this.data.tname
     var that = this;
     let url = 'Editinfo/';
+    this.data.uid = wx.getStorageSync('openid')
+    this.data.sessionid = wx.getStorageSync('sessionid')
     let data = {
       uid: uid,
       phoneNum: phoneNum,
       tname: tname
     }
     http.header.Authorization = this.data.sessionid;//给header 赋值
+    console.log('this.data.post seseion id= ' + this.data.sessionid)
     http.postReq(url, data).then(function (res) {
       console.log(res)
       console.log(res.message)
+      if (res.message=='noright'){
+
+        relogin.relogins()
+        
+        console.log('this.data.sessionid seseion id= ' + this.data.sessionid)
+        wx.showToast({
+          title: '登录超时，请重试',
+          icon: 'loading',
+          duration: 1000,
+          mask: true
+        })
+      }
       if (res.message == 'ok') {
         //that.get_log_dat()
         wx.showToast({
@@ -85,6 +108,9 @@ Page({
           duration: 1000,
           mask: true
         })
+        wx.navigateBack({
+          delta: 1
+        });
       }
 
     }) 

@@ -2,6 +2,7 @@
 import { promisify } from '../../utils/promise.util'
 const wxUploadFile = promisify(wx.uploadFile)
 const http = require('../../utils/http.js')
+const relogin = require('../../utils/relogin.js');
 let util = require('../../utils/util.js')
 Page({
 
@@ -15,7 +16,7 @@ Page({
     dtype: null,
     uid: '',
     tname: '',
-    hasrole: 0,  //是否有权限
+    role: null,  //是否有权限
     pdList:null,//发射机数组
     pdindex:0, //发射机编号  
     pdname:'', //发射机名称
@@ -302,17 +303,19 @@ Page({
     let amb_v = this.data.amb_v
     let amb_a = this.data.amb_a
     let imgs = this.data.imgList
-   
-    if (this.data.hasrole == "0") {
+    let role = wx.getStorageSync('role')  
+    if (role != "2") {
       wx.showModal({
-        title: '提示',
-        content: '权限不足，请先完善您的个人信息',
+        title: '出错啦',
+        content: '信息不全，请先完善您的个人信息',
         text: 'center',
-        complete() {
-          wx.switchTab({
-            url: '/pages/mine/index'
-          })
-        }
+        success: function (res) {
+          if (res.confirm) {
+            wx.switchTab({
+              url: '/pages/mine/index'
+            })
+          }
+        }  
       })
       return false;
     }
@@ -506,12 +509,12 @@ Page({
       uid: this.data.uid
     }
     http.postReq(url, data).then(function (res) {
-      console.log(res.result)     
+      console.log(res.result)  
+      
       that.setData({
         picker: res.result,
         dtype: res.result[0].id,
-        tname: res.info[0].name,
-        hasrole: res.info[0].role
+        tname: res.info[0].name,        
       });
      
       that.fetchpdlist()
@@ -544,7 +547,8 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-   
+    //const relogin = require('../../utils/relogin.js');
+    relogin.relogins()
   },
 
   /**

@@ -1,5 +1,5 @@
 // pages/mine/mine.js
-var app = getApp()
+let app = getApp()
 const http = require('../../utils/http.js');
 Page({
   data: {
@@ -7,7 +7,11 @@ Page({
     title: '',
     balance: '',
     userInfo: {},
+    open:true,
+    tname:null,
     hasUserInfo: false,//是否有用户信息，默认否
+    btitle:'点击完善个人信息',
+    haseditinfo:false
     
   },
   toinfo: function () {
@@ -46,13 +50,21 @@ Page({
 
   },
   getUserInfo: function (e) {
-    console.log(e)
-    app.globalData.userInfo = e.detail.userInfo
-    console.log(app.globalData.userInfo)
-    this.setData({
-      userInfo: e.detail.userInfo,
-      hasUserInfo: true
-    })
+    
+    let errMsg = e.detail.errMsg
+    if (errMsg == "getUserInfo:fail auth deny"){
+      //拒绝授权
+     
+    } else{
+      //允许授权
+      app.globalData.userInfo = e.detail.userInfo
+      console.log(app.globalData.userInfo)
+      this.setData({
+        userInfo: e.detail.userInfo,
+        hasUserInfo: true
+      })
+    }
+   
   },
   get_data() {
 
@@ -68,33 +80,19 @@ Page({
       // console.log(data.result);
       if (res.result.name == '') {
         //没有名字信息，跳转到地址页面让用户填写信息
-        wx.showModal({
-          title: '温馨提示',
-          content: '亲，请先完善您的个人信息哦。',
-          text: 'center',
-          success: function (res) {
-            if (res.confirm) {
-              wx.navigateTo({
-                url: '/pages/address/address'
-              })
-            } else if (res.cancel) {
-              that.setData({
-                balance: 0,
-                tname: that.data.userInfo.nickName
-              })
-            }
-            // wx.navigateTo({
-            //  url: '/pages/address/address'
-            // })
-          }
+        that.setData({
+          btitle: '点击完善个人信息',          
+          haseditinfo: false
         })
+
       } else {
         /* wx.setStorage({
            key: 'address',
            data: res,         
          })*/
         that.setData({
-          balance: res.result.balance,
+          haseditinfo: true,
+          btitle: '修改个人信息', 
           tname: res.result.name
         })
       }

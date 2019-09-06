@@ -2,6 +2,7 @@
 import { promisify } from '../../utils/promise.util'
 const wxUploadFile = promisify(wx.uploadFile)
 const http = require('../../utils/http.js')
+const relogin = require('../../utils/relogin.js');
 let util = require('../../utils/util.js')
 Page({
 
@@ -23,7 +24,7 @@ Page({
     size:null,
     uid: '',
     tname:'',
-    hasrole:0  //是否有权限
+    role:null  //是否有权限
   },
   PickerChange(e) {
     //发射台选择处理
@@ -33,7 +34,7 @@ Page({
       index: e.detail.value,
       dtype: this.data.picker[index0].id,
     })
-    console.log(e.detail.value);
+    //console.log(e.detail.value);
     this.NewsItemsShow();
   },//end of PickerChange
   DateChange(e) {
@@ -45,7 +46,7 @@ Page({
   handleTitleInput(e) {
     //标题输入处理
     let value = e.detail.value
-    console.log(value)
+    //console.log(value)
     this.setData({
       title: value
     })
@@ -109,7 +110,7 @@ Page({
  
   DelVideo(e) {
     wx.showModal({
-      title: '湖南电台',
+      title: '传输覆盖管理系统',
       content: '确定要删除此视频吗？',
       cancelText: '取消',
       confirmText: '确定',
@@ -132,7 +133,7 @@ Page({
   },
   DelImg(e) {
     wx.showModal({
-      title: '传输覆盖系统',
+      title: '传输覆盖管理系统',
       content: '确定要删除这张图片吗？',
       cancelText: '取消',
       confirmText: '确定',
@@ -230,29 +231,31 @@ Page({
   submitForm(e) {
 
     console.log('submit form')
-    console.log(this.data.hasrole)
-    console.log(this.data.hasrole == "0")
+    
 
     let title = this.data.title
     let content = this.data.content   
     let size=this.data.size
-    if (this.data.hasrole == "0") {
+    let role = wx.getStorageSync('role')  
+    if (role != "2") {
       wx.showModal({
-        title: '提示',
-        content: '权限不足，请先完善您的个人信息',
+        title: '出错啦',
+        content: '信息不全，请先完善您的个人信息',
         text: 'center',
-        complete() {
-          wx.switchTab({
-            url: '/pages/mine/index'
-          })
-        }
+        success: function (res) {          
+          if (res.confirm) {           
+            wx.switchTab({
+              url: '/pages/mine/index'
+            })
+          }
+        }       
       })
       return false;
     }
     console.log(this.data.size)
     if (this.data.size > 10) {
       wx.showModal({
-        title: '传输覆盖',
+        title: '传输覆盖管理系统',
         content: '很抱歉，视频最大允许10M，当前为' + (this.data.size + 'M')
       })
       return false;
@@ -290,16 +293,15 @@ Page({
       uid: this.data.uid
     }
     http.postReq(url, data).then(function (res) {
-      console.log(res.result)
-      console.log(res.result[0])
+     
      //console.log(res.result[1])
       that.setData({
         picker: res.result,
         dtype: res.result[0].id,
-        tname: res.info[0].name,
-        hasrole: res.info[0].role
+        tname: res.info[0].name
+       
       });
-      console.log('role='+that.data.hasrole)
+     
      
     })
     // console.log(this.data.picker[0].id)
@@ -324,7 +326,8 @@ Page({
    */
   onShow: function () {
     this.data.uid = wx.getStorageSync('openid')
-
+    //const relogin = require('../../utils/relogin.js');
+    relogin.relogins()
     this.fetchtype()
     this.initdate()
     

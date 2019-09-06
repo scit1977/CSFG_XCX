@@ -7,7 +7,7 @@ App({
     //获取屏幕设备属性   
     wx.getSystemInfo({
       success: e => {
-        console.log(e)
+        
         that.globalData.StatusBar = e.statusBarHeight;
         let custom = wx.getMenuButtonBoundingClientRect();
         that.globalData.Custom = custom;
@@ -57,9 +57,7 @@ App({
             wx.setStorageSync('openid', uid) 
             wx.setStorageSync('sessionid', sessionid)  
             wx.setStorageSync('role', role)  
-            console.log('init uid=='+uid)   
-            console.log('init sessionid==' + sessionid)  
-            console.log('init role==' + role)
+           
                        
           },
           fail: res => {
@@ -115,6 +113,7 @@ App({
     urlPath: 'https://fg.heyishe.cn/wx/',
     openid: null,
     sessionid:null,
+    role:null,
     Custom: null,
     StatusBar: '20',
     CustomBar: '65',

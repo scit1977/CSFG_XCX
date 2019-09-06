@@ -17,16 +17,17 @@
    
 </view> <!-- 消息列表上区结束--> 
 <view class="cu-bar bg-white solid-bottom padding " >
-    本系统为封闭式内部系统，仅供湖南省各地市发射台站用户使用，请先允许微信授权，并填写好您的个人信息，后台审核通过后开通相应权限方可开始使用本系统。
+    本系统为内部系统，仅供湖南省各地市发射台站用户使用。第一步注册/登录，第二步填写好您的个人信息（姓名和手机号码），方可开始上传数据。
     
 </view> <!-- 消息列表上区结束--> 
 <view class="cu-bar bg-white solid-bottom padding " >
-    1、允许微信授权。
+    第一步、注册/登录：
     
 </view> <!-- 消息列表上区结束--> 
 
 <view class="cu-bar bg-white solid-bottom padding flex flex-direction">
-  <button  wx:if="{{!hasUserInfo }}" open-type="getUserInfo" bindgetuserinfo="getUserInfo" class="cu-btn bg-red margin-tb-sm lg"> 点击微信授权 </button>
+
+  <button  wx:if="{{!hasUserInfo }}" open-type="getUserInfo" bindgetuserinfo="getUserInfo" class="cu-btn bg-red margin-tb-sm lg"> 注册/登录 </button>
   <block  wx:else>
      <text >当前用户为：{{userInfo.nickName}}</text>
     <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
@@ -35,12 +36,12 @@
  
 </view>
 <view class="cu-bar bg-white solid-bottom padding " >
-    2、填写个人信息。
+    第二步、完善个人信息：
     
 </view> <!-- 消息列表上区结束--> 
 <view class="cu-bar bg-white solid-bottom padding flex flex-direction" >
 
-      <button class="cu-btn bg-red margin-tb-sm lg" wx:if="{{hasUserInfo }}" bindtap="toinfo" >个人信息</button>
+      <button class="cu-btn bg-red margin-tb-sm lg" wx:if="{{hasUserInfo }}" bindtap="toinfo" >{{btitle}}</button>
   
 </view> <!-- 消息列表上区结束--> 
 
