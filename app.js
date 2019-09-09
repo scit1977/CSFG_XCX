@@ -54,6 +54,7 @@ App({
             that.globalData.openid = uid
             that.globalData.sessionid = sessionid
             that.globalData.role = role
+            console.log('init role='+role)
             wx.setStorageSync('openid', uid) 
             wx.setStorageSync('sessionid', sessionid)  
             wx.setStorageSync('role', role)  

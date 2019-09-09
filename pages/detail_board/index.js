@@ -9,6 +9,7 @@ Page({
     id: null,
     title: null,
     content: null,
+    fujian:null
   },
   loadnews: function () {
     //postReq(url, data, cb)
@@ -26,7 +27,7 @@ Page({
         title: res.result.title,
         content: res.result.content,       
         input_date: res.result.input_date,
-       
+        fujian: res.result.fujian,
 
 
       });
@@ -42,7 +43,7 @@ Page({
   toattachment: function () {
     wx.downloadFile({
 
-      url: 'https://fg.heyishe.cn/2019/a1.pdf',
+      url: this.data.fujian,
 
       success: function (res) {
 

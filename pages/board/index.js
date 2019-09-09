@@ -59,6 +59,7 @@ Page({
     this.data.uid = wx.getStorageSync('openid')
     this.data.sessionid = wx.getStorageSync('sessionid')
     this.data.role = wx.getStorageSync('role')
+    console.log('role='+role)
     let sessionid = this.data.sessionid
     let role = this.data.role
     //判断权限
