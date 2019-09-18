@@ -35,7 +35,7 @@ Page({
       dtype: this.data.picker[index0].id,
     })
     //console.log(e.detail.value);
-    this.NewsItemsShow();
+    //this.NewsItemsShow();
   },//end of PickerChange
   DateChange(e) {
     //日期选择处理

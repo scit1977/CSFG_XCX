@@ -23,7 +23,12 @@
 <view class="padding bg-white">
   <view class="text-left padding"> <template is="wxParse"  data="{{wxParseData:content.nodes}}"/></view>
 </view><!-- 内容区结束--> 
-
+<view class="cu-bar bg-white solid-bottom margin-top">
+  <view class="action">
+    <text class="cuIcon-title text-blue"></text>	附件：
+  </view>
+</view>
+<view class="padding bg-white"><button class="cu-btn round bg-olive"  wx:if="{{fujian}}" bindtap="toattachment">查看附件</button> </view>
  <view class="box margin-top">
    <view class="cu-bar btn-group">
     <button class="cu-btn bg-green shadow-blur round lg " bindtap="toback">返回</button>

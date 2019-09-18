@@ -59,6 +59,25 @@ Page({
       //允许授权
       app.globalData.userInfo = e.detail.userInfo
       console.log(app.globalData.userInfo)
+      var that = this;
+      let url = 'Wxadduser/';
+      let data = {
+        uid: app.globalData.openid,
+        nickName: e.detail.userInfo.nickName,
+        avatarUrl: e.detail.userInfo.avatarUrl,
+        province: e.detail.userInfo.province,
+        city: e.detail.userInfo.city,
+        gender: e.detail.userInfo.gender,
+      }
+      http.postReq(url, data).then(function (res) {
+        //http.postReq(url, data, function (res) {
+        //插入登录的用户的相关信息到数据库
+        console.log(res)
+        app.globalData.userInfo = e.detail.userInfo
+        console.log(res.data)
+        console.log("插入小程序登录用户信息成功！");
+
+      })
       this.setData({
         userInfo: e.detail.userInfo,
         hasUserInfo: true

@@ -9,6 +9,7 @@ Page({
     id: null,
     title: null,
     content: null,
+    fujian: null
   },
   loadnews: function () {
     //postReq(url, data, cb)
@@ -26,7 +27,7 @@ Page({
         title: res.result.title,
         content: res.result.content,
         input_date: res.result.input_date,
-
+        fujian: res.result.fujian,
 
 
       });
@@ -39,6 +40,35 @@ Page({
 
 
   },//end of loadnews
+  toattachment: function () {
+    //查看附件
+    wx.downloadFile({
+
+      url: this.data.fujian,
+
+      success: function (res) {
+
+        var filePath = res.tempFilePath
+
+        wx.openDocument({
+
+          filePath: filePath,
+
+          success: function (res) {
+
+            console.log('打开文档成功')
+
+          }
+
+        })
+
+      }
+
+    })
+
+
+
+  },// end of toattachment
   toback: function () {
     //返回
     wx.navigateBack({

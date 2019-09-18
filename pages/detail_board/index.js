@@ -41,6 +41,7 @@ Page({
 
   },//end of loadnews
   toattachment: function () {
+    //查看附件
     wx.downloadFile({
 
       url: this.data.fujian,
